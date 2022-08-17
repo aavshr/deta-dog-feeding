@@ -1,5 +1,5 @@
 import preprocess from 'svelte-preprocess';
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-node'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,18 +11,7 @@ const config = {
 		})
 	],
 	kit: {
-		adapter: adapter({
-			pages: `docs`
-		}),
-		paths: process.env['DEPLOY']
-			? {
-					base: `/mermaid-live-editor`
-			  }
-			: {},
-		trailingSlash: 'ignore',
-		prerender: {
-			default: true
-		}
+		adapter: adapter()
 	}
 };
 

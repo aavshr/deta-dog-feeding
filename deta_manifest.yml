@@ -4,6 +4,8 @@ micros:
     src: mermaid
     engine: svelte-kit
     primary: true
+    commands:
+      - npm -i esbuild-linux-64
     presets:
       env:
         - name: PORT

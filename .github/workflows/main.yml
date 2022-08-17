@@ -1,0 +1,17 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: publish
+        uses: deta/publish-pc-app@v0-v1
+        with:
+          app: "0fb6bb64-8561-4473-84d5-fb05fe8bafd5"
+          desc: "Mermaid Live Editor"
+        env:
+          DETA_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}

@@ -2,5 +2,10 @@ v: 0
 micros:
   - name: mermaid
     src: mermaid
-    engine: svelte-kit
+    engine: nodejs16.x
     primary: true
+    presets:
+      env:
+        - name: PORT
+          description: port for node adapter
+          default: 8080

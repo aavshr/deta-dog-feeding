@@ -1,0 +1,10 @@
+node_modules
+coverage/
+.*
+!.gitignore
+!.github
+build/
+yarn-error.log
+mermaid/build
+mermaid/functions
+mermaid/snapshots.js

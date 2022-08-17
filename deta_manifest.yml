@@ -1,0 +1,6 @@
+v: 0
+micros:
+  - name: mermaid
+    src: mermaid
+    engine: svelte-kit
+    primary: true

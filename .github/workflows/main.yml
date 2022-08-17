@@ -14,4 +14,4 @@ jobs:
           app: "0fb6bb64-8561-4473-84d5-fb05fe8bafd5"
           desc: "Mermaid Live Editor"
         env:
-          DETA_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          DETA_ACCESS_TOKEN: ${{ secrets.DETA_ACCESS_TOKEN }}

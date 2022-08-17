@@ -5,6 +5,6 @@ coverage/
 !.github
 build/
 yarn-error.log
-mermaid/build
-mermaid/functions
-mermaid/snapshots.js
+mermaid-src/build
+mermaid-src/functions
+mermaid-src/snapshots.js

@@ -3,7 +3,8 @@
     import { API } from '../../api';
     import { updateCode } from '$lib/util/state';
 
-    const api = new API(`https://backend_${window.location.host}`)
+    //const api = new API(`https://backend_${window.location.host}`)
+    const api = new API()
     let codes = []
 
     const loadCodes = async () => {

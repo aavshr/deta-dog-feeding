@@ -1,11 +1,11 @@
 v: 0
 micros:
-  - name: mermaid
-    src: mermaid
-    engine: nodejs16.x
+  - name: backend
+    src: backend
+    engine: custom
     primary: true
-    presets:
-      env:
-        - name: PORT
-          description: port for node adapter
-          default: 8080
+    commands:
+      - go mod download
+      - go build -o backend
+    artefact: backend
+    run: ./backend

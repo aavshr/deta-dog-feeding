@@ -182,24 +182,8 @@
 		<button id="downloadSVG" class="action-btn flex-auto" on:click={onDownloadSVG}>
 			<i class="fas fa-download mr-2" /> SVG
 		</button>
-		<a target="_blank" href={iUrl}>
-			<button class="action-btn flex-auto">
-				<i class="fas fa-external-link-alt mr-2" /> PNG
-			</button>
-		</a>
 
-		<a target="_blank" href={svgUrl}>
-			<button class="action-btn flex-auto">
-				<i class="fas fa-external-link-alt mr-2" /> SVG
-			</button>
-		</a>
-
-		<a target="_blank" href={krokiUrl}>
-			<button class="action-btn flex-auto">
-				<i class="fas fa-external-link-alt mr-2" /> Kroki
-			</button>
-		</a>
-
+		<!--
 		<div class="flex gap-2 items-center">
 			PNG size
 			<label for="autosize">
@@ -224,15 +208,7 @@
 					bind:value={userimagesize} />
 			{/if}
 		</div>
-
-		<div class="w-full flex gap-2 items-center">
-			<input class="input" id="markdown" type="text" value={mdCode} on:click={onCopyMarkdown} />
-			<label for="markdown">
-				<button class="btn btn-primary btn-md flex-auto" on:click={onCopyMarkdown}>
-					Copy Markdown
-				</button>
-			</label>
-		</div>
+		-->
 
 		<div class="w-full flex gap-2 items-center">
 			<input
@@ -245,12 +221,5 @@
 				<button class="btn btn-primary btn-md flex-auto" on:click={loadGist}> Load Gist </button>
 			</label>
 		</div>
-		{#if isNetlify}
-			<div class="w-full flex items-center justify-center">
-				<a class="link underline text-gray-500 text-sm" href="https://netlify.com">
-					This site is powered by Netlify
-				</a>
-			</div>
-		{/if}
 	</div>
 </Card>

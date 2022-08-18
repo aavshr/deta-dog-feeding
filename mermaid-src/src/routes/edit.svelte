@@ -5,7 +5,6 @@
 	import Actions from '$lib/components/actions.svelte';
 	import View from '$lib/components/view.svelte';
 	import Card from '$lib/components/card/card.svelte';
-	import History from '$lib/components/history/history.svelte';
 	import { updateCode, updateConfig, inputStateStore, stateStore } from '$lib/util/state';
 	import { cmdKey, debounceEnabled, initHandler, syncDiagram } from '$lib/util/util';
 	import { onMount } from 'svelte';
@@ -181,7 +180,6 @@
 
 			<div class="-mt-2">
 				<Preset />
-				<History />
 				<Actions />
 			</div>
 		</div>

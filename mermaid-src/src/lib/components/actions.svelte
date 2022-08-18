@@ -3,12 +3,15 @@
 	import Card from '$lib/components/card/card.svelte';
 	import { krokiRendererUrl, rendererUrl } from '$lib/util/env';
 	import { pakoSerde } from '$lib/util/serde';
-	import { stateStore } from '$lib/util/state';
+	import {stateStore, updateCode} from '$lib/util/state';
 	import { logEvent } from '$lib/util/stats';
 	import { toBase64 } from 'js-base64';
+	import { API } from '../../api';
 	import moment from 'moment';
 
 	type Exporter = (context: CanvasRenderingContext2D, image: HTMLImageElement) => () => void;
+
+	const api = new API()
 
 	const getFileName = (ext: string) =>
 		`mermaid-diagram-${moment().format('YYYY-MM-DD-HHmmss')}.${ext}`;
@@ -150,6 +153,33 @@
 		void logEvent('loadGist');
 	};
 
+	let codeKey = getFileName("md");
+	const putCode = async () => {
+		if (!codeKey) {
+			alert('Please enter a name');
+		}
+		await api.putCode(codeKey, JSON.parse(localStorage.getItem("codeStore")).code)
+		alert("Saved");
+	}
+
+	let loadKey = '';
+	const loadCode = async () => {
+		if(!loadKey) {
+			alert('Please enter a load key')
+		}
+		const code = await api.getContent(loadKey)
+		if (code){
+			codeKey = loadKey
+			updateCode(code, {
+				updateDiagram: true,
+				updateEditor: true,
+				resetPanZoom: true
+			});
+		} else {
+			alert('No such file found')
+		}
+	}
+
 	let iUrl: string;
 	let svgUrl: string;
 	let krokiUrl: string;
@@ -209,7 +239,18 @@
 			{/if}
 		</div>
 		-->
-
+		<div class="w-full flex gap-2 items-center">
+			<input
+					class="input"
+					id="code-key"
+					type="text"
+					bind:value={codeKey}
+					placeholder="Enter File Name" />
+			<label for="code-key">
+				<button class="btn btn-primary btn-md flex-auto" on:click={putCode}>Save </button>
+			</label>
+		</div>
+		<!--
 		<div class="w-full flex gap-2 items-center">
 			<input
 				class="input"
@@ -219,6 +260,18 @@
 				placeholder="Enter Gist URL" />
 			<label for="gist">
 				<button class="btn btn-primary btn-md flex-auto" on:click={loadGist}> Load Gist </button>
+			</label>
+		</div>
+		-->
+		<div class="w-full flex gap-2 items-center">
+			<input
+					class="input"
+					id="load-key"
+					type="text"
+					bind:value={loadKey}
+					placeholder="Enter File Name" />
+			<label for="load-key">
+				<button class="btn btn-primary btn-md flex-auto" on:click={loadCode}> Load</button>
 			</label>
 		</div>
 	</div>

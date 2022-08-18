@@ -2,6 +2,7 @@
 	import Editor from '$lib/components/editor.svelte';
 	import Navbar from '$lib/components/navbar.svelte';
 	import Preset from '$lib/components/preset.svelte';
+	import Existing from '$lib/components/existing.svelte';
 	import Actions from '$lib/components/actions.svelte';
 	import View from '$lib/components/view.svelte';
 	import Card from '$lib/components/card/card.svelte';
@@ -179,6 +180,7 @@
 			</Card>
 
 			<div class="-mt-2">
+				<Existing />
 				<Preset />
 				<Actions />
 			</div>

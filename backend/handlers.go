@@ -45,7 +45,7 @@ func (s *Server) Start() error{
 }
 
 func (s *Server) registerHandlers() {
-	s.e.GET("/health", s.HealthCheck)
+	s.e.GET("/", s.HealthCheck)
 	s.e.GET("/codes", s.List)
 	s.e.POST("/codes", s.Post)
 	s.e.GET("/codes/content", s.Get)
@@ -57,7 +57,7 @@ func (s *Server) NewInternalServerError() *echo.HTTPError {
 }
 
 // HealthCheck xx
-// GET /health
+// GET /
 func (s *Server) HealthCheck(c echo.Context) error {
 	return c.String(http.StatusOK, "OK")
 }

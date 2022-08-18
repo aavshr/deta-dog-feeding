@@ -6,6 +6,11 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"io/ioutil"
 	"net/http"
+	"os"
+)
+
+const (
+	EnvKeyPrimaryHost = "DETA_SPACE_APP_HOSTNAME"
 )
 
 // Config xx
@@ -36,6 +41,7 @@ func NewServer(c *Config) (*Server, error) {
 		e: e,
 	}
 	s.registerHandlers()
+	s.configureCORS()
 	return s, nil
 }
 
@@ -50,6 +56,15 @@ func (s *Server) registerHandlers() {
 	s.e.POST("/codes", s.Post)
 	s.e.GET("/codes/content", s.Get)
 	s.e.DELETE("/codes/content", s.Delete)
+}
+
+func (s *Server) configureCORS() {
+	s.e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000", fmt.Sprintf("https://%s", os.Getenv(EnvKeyPrimaryHost))},
+		AllowCredentials: true,
+		AllowMethods: []string{"*"},
+		AllowHeaders: []string{"*"},
+	}))
 }
 
 func (s *Server) NewInternalServerError() *echo.HTTPError {

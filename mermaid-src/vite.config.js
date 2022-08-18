@@ -8,11 +8,11 @@ const config = {
 		noExternal: ['@macfja/svelte-persistent-store']
 	},
 	server: {
-		port: 8080,
+		port: 3000,
 		host: true
 	},
 	preview: {
-		port: 8080,
+		port: 3000,
 		host: true
 	},
 	test: {

@@ -9,3 +9,11 @@ micros:
         - name: PORT
           description: port for node adapter
           default: 8080
+  - name: backend
+    src: backend
+    engine: custom
+    commands:
+      - go mod download
+      - go build -o backend
+    artefact: backend
+    run: ./backend

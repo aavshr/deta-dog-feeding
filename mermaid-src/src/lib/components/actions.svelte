@@ -3,12 +3,15 @@
 	import Card from '$lib/components/card/card.svelte';
 	import { krokiRendererUrl, rendererUrl } from '$lib/util/env';
 	import { pakoSerde } from '$lib/util/serde';
-	import { stateStore } from '$lib/util/state';
+	import {stateStore, updateCode} from '$lib/util/state';
 	import { logEvent } from '$lib/util/stats';
 	import { toBase64 } from 'js-base64';
+	import { API } from '../../api';
 	import moment from 'moment';
 
 	type Exporter = (context: CanvasRenderingContext2D, image: HTMLImageElement) => () => void;
+
+	const api = new API(`https://backend_${window.location.host}`)
 
 	const getFileName = (ext: string) =>
 		`mermaid-diagram-${moment().format('YYYY-MM-DD-HHmmss')}.${ext}`;
@@ -150,6 +153,33 @@
 		void logEvent('loadGist');
 	};
 
+	let codeKey = getFileName("md");
+	const putCode = async () => {
+		if (!codeKey) {
+			alert('Please enter a name');
+		}
+		await api.putCode(codeKey, JSON.parse(localStorage.getItem("codeStore")).code)
+		alert("Saved");
+	}
+
+	let loadKey = '';
+	const loadCode = async () => {
+		if(!loadKey) {
+			alert('Please enter a load key')
+		}
+		const code = await api.getContent(loadKey)
+		if (code){
+			codeKey = loadKey
+			updateCode(code, {
+				updateDiagram: true,
+				updateEditor: true,
+				resetPanZoom: true
+			});
+		} else {
+			alert('No such file found')
+		}
+	}
+
 	let iUrl: string;
 	let svgUrl: string;
 	let krokiUrl: string;
@@ -182,24 +212,8 @@
 		<button id="downloadSVG" class="action-btn flex-auto" on:click={onDownloadSVG}>
 			<i class="fas fa-download mr-2" /> SVG
 		</button>
-		<a target="_blank" href={iUrl}>
-			<button class="action-btn flex-auto">
-				<i class="fas fa-external-link-alt mr-2" /> PNG
-			</button>
-		</a>
 
-		<a target="_blank" href={svgUrl}>
-			<button class="action-btn flex-auto">
-				<i class="fas fa-external-link-alt mr-2" /> SVG
-			</button>
-		</a>
-
-		<a target="_blank" href={krokiUrl}>
-			<button class="action-btn flex-auto">
-				<i class="fas fa-external-link-alt mr-2" /> Kroki
-			</button>
-		</a>
-
+		<!--
 		<div class="flex gap-2 items-center">
 			PNG size
 			<label for="autosize">
@@ -224,16 +238,19 @@
 					bind:value={userimagesize} />
 			{/if}
 		</div>
-
+		-->
 		<div class="w-full flex gap-2 items-center">
-			<input class="input" id="markdown" type="text" value={mdCode} on:click={onCopyMarkdown} />
-			<label for="markdown">
-				<button class="btn btn-primary btn-md flex-auto" on:click={onCopyMarkdown}>
-					Copy Markdown
-				</button>
+			<input
+					class="input"
+					id="code-key"
+					type="text"
+					bind:value={codeKey}
+					placeholder="Enter File Name" />
+			<label for="code-key">
+				<button class="btn btn-primary btn-md flex-auto" on:click={putCode}>Save </button>
 			</label>
 		</div>
-
+		<!--
 		<div class="w-full flex gap-2 items-center">
 			<input
 				class="input"
@@ -245,12 +262,17 @@
 				<button class="btn btn-primary btn-md flex-auto" on:click={loadGist}> Load Gist </button>
 			</label>
 		</div>
-		{#if isNetlify}
-			<div class="w-full flex items-center justify-center">
-				<a class="link underline text-gray-500 text-sm" href="https://netlify.com">
-					This site is powered by Netlify
-				</a>
-			</div>
-		{/if}
+		-->
+		<div class="w-full flex gap-2 items-center">
+			<input
+					class="input"
+					id="load-key"
+					type="text"
+					bind:value={loadKey}
+					placeholder="Enter File Name" />
+			<label for="load-key">
+				<button class="btn btn-primary btn-md flex-auto" on:click={loadCode}> Load</button>
+			</label>
+		</div>
 	</div>
 </Card>

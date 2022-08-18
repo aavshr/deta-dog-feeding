@@ -2,10 +2,10 @@
 	import Editor from '$lib/components/editor.svelte';
 	import Navbar from '$lib/components/navbar.svelte';
 	import Preset from '$lib/components/preset.svelte';
+	import Existing from '$lib/components/existing.svelte';
 	import Actions from '$lib/components/actions.svelte';
 	import View from '$lib/components/view.svelte';
 	import Card from '$lib/components/card/card.svelte';
-	import History from '$lib/components/history/history.svelte';
 	import { updateCode, updateConfig, inputStateStore, stateStore } from '$lib/util/state';
 	import { cmdKey, debounceEnabled, initHandler, syncDiagram } from '$lib/util/util';
 	import { onMount } from 'svelte';
@@ -180,8 +180,8 @@
 			</Card>
 
 			<div class="-mt-2">
+				<Existing />
 				<Preset />
-				<History />
 				<Actions />
 			</div>
 		</div>

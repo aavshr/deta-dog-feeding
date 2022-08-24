@@ -11,7 +11,7 @@
 
 	type Exporter = (context: CanvasRenderingContext2D, image: HTMLImageElement) => () => void;
 
-	const api = new API(`https://backend_${window.location.host}`)
+	const api = new API(`https://${window.location.host}/backend`)
 
 	const getFileName = (ext: string) =>
 		`mermaid-diagram-${moment().format('YYYY-MM-DD-HHmmss')}.${ext}`;

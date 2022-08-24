@@ -57,7 +57,7 @@ export class API {
     }
 
     async listCodes(): Promise<Code[]> {
-        const response = await this.request('GET', "/codes")
+        const response = await this.request('GET', "/backend/codes")
         if (response.ok) {
             return response as Code[]
         }
@@ -66,7 +66,7 @@ export class API {
 
     async getContent(key: string): Promise<string> {
         try {
-            const url = this.buildUrl(`/codes/content?key=${key}`)
+            const url = this.buildUrl(`/backend/codes/content?key=${key}`)
             const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include',
@@ -80,7 +80,7 @@ export class API {
     }
     async deleteContent(key: string) {
         try {
-            const url = this.buildUrl(`/codes/content?key=${key}`)
+            const url = this.buildUrl(`/backend/codes/content?key=${key}`)
             const response = await fetch(url, {
                 method: 'DELETE',
                 credentials: 'include',
@@ -93,6 +93,6 @@ export class API {
         }
     }
     async putCode(key: string, content: string) {
-        return this.request('POST', `/codes?key=${key}`, content)
+        return this.request('POST', `/backend/codes?key=${key}`, content)
     }
 }
